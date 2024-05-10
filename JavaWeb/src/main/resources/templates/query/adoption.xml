@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.adoption.dao.AdoptionDAO">
+	<resultMap type="adoption" id="adoptionMap">
+		<id column="adoption_id" property="adoptionId"/>
+		<result column="adoption_content" property="adoptionContent"/>
+		<result column="adoption_date" property="adoptionDate"/>
+		<result column="adoption_title" property="adoptionTitle"/>
+		<result column="adoption_cnt" property="adoptionCnt"/>
+		<result column="adoption_status" property="adoptionStatus"/>
+		<result column="adoption_level" property="adoptionLevel"/>
+		<result column="adoption_file" property="adoptionFile"/>
+		
+		<result column="admin_id" property="adminId"/>
+		
+		<result column="animal_id" property="animalId"/>
+		<result column="animal_species" property="animalSpecies"/>
+		<result column="animal_age" property="animalAge"/>
+		<result column="animal_gender" property="animalGender"/>
+		<result column="animal_status" property="animalStatus"/>
+		<result column="animal_kg" property="animalKg"/>
+		<result column="animal_color" property="animalColor"/>
+		<result column="animal_memo" property="animalMemo"/>
+		<result column="animal_temp" property="animalTemp"/>
+		<result column="animal_regist" property="animalRegist"/>
+		<result column="animal_name" property="animalName"/>
+		
+		<result column="readcnt" property="readcnt"/>
+		<result column="animal_file" property="animalFile"/>	
+	</resultMap>
+	
+	<select id="adoptionList" parameterType="adoption" resultMap="adoptionMap">
+		<![CDATA[
+		SELECT
+			adoption_id,adoption_title, adoption_status, TO_CHAR(adoption_date, 'YYYY-MM--DD') AS adotion_date, adoption_cnt, adoption_level
+		FROm (
+				SELECT /*+INDEX_DESC(adoption pk_adoption)*/
+				ROWNUM ASrnum, adoption_id, adoption_title, adoption_status, adoption_date, adoption_cnt, adoption_level
+				FROM adoption
+				WHERE]]>
+				<trim prefix="(" suffix=") AND" prefixOverrides="AND">
+					<include refid="adoptionSearch"></include>
+				</trim> 
+				<![CDATA[ rownum <= #{pageNum} * #{amount}
+				) adoptionList
+					WHERE rnum > (#{pageNum} - 1) * #{amount}
+				]]>
+	</select>
+	
+	<sql id="adoptionSearch">
+		<if test="search=='adoption_id'">
+			<![CDATA[adoption_id LIKE '%'||#{keyword} || '%']]>
+		</if>
+		<if test="search=='adoption_title'">
+			<![CDATA[adoption_title LIKE '%'||#{keyword} || '%']]>
+		</if>
+		<if test="search=='adoption_level'">
+			<![CDATA[adoption_level LIKE '%'||#{keyword} || '%']]>
+		</if>
+		<if test="search=='adoption_status'">
+			<![CDATA[adoption_status LIKE '%'||#{keyword} || '%']]>
+		</if>
+	</sql>
+</mapper>

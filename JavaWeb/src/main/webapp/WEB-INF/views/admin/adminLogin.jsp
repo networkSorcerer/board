@@ -20,8 +20,8 @@
 			</div>
 			<div class="form-floating">
 				<input type="password" class="form-control"
-				name="adminPassword" id="adminpasswd" placeholder="Admin Password">
-				<label for="adminPassword">Admin Password</label>
+				name="adminPasswd" id="adminPasswd" placeholder="Admin Password">
+				<label for="adminPasswd">Admin Password</label>
 			</div>
 			<button type="button" id="loginBtn">Sign in</button>
 		</form>

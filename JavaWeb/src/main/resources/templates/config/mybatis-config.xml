@@ -3,5 +3,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.spring.admin.login.vo.AdminLoginVO" alias="adminLogin"/>
+		<typeAlias type="com.spring.adoption.vo.AdoptionVO" alias="adoption"/>
 	</typeAliases>
 </configuration>
