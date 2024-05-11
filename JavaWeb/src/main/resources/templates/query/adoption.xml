@@ -35,7 +35,7 @@
 			adoption_id,adoption_title, adoption_status, TO_CHAR(adoption_date, 'YYYY-MM--DD') AS adotion_date, adoption_cnt, adoption_level
 		FROm (
 				SELECT /*+INDEX_DESC(adoption pk_adoption)*/
-				ROWNUM ASrnum, adoption_id, adoption_title, adoption_status, adoption_date, adoption_cnt, adoption_level
+				ROWNUM AS rnum, adoption_id, adoption_title, adoption_status, adoption_date, adoption_cnt, adoption_level
 				FROM adoption
 				WHERE]]>
 				<trim prefix="(" suffix=") AND" prefixOverrides="AND">
