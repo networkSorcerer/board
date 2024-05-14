@@ -74,4 +74,14 @@
 		SET adoption_cnt = adoption_cnt + 1
 		WHERE adoption_id = #{adoptionId}
 	</update>
+	
+	<select id="adoptionDetail" parameterType="adoption" resultMap="adoptionMap">
+		select an.animal_id, an.animal_name, an.animal_species, an.animal_gender, 
+		an.animal_kg, an.animal_age,an.animal_file,an.readcnt,
+		an.animal_age,an.animal_color,an.animal_status,an.animal_memo,an.animal_temp, 
+		ad.adoption_id, ad.adoption_title,ad.adoption_level,ad.adoption_status,ad.adoption_date,
+		ad.adoption_cnt,ad.adoption_file,ad.adoption_thumb,ad.adoption_content
+		from animal an  join adoption ad  on an.animal_id = ad.animal_id
+		where ad.adoption_id = #{adoptionId}
+	</select> 
 </mapper>

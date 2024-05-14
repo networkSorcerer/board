@@ -20,6 +20,7 @@ public class AdoptionVO extends CommonVO {
 	
 	private int animalId=0;
 	private String animalSpecies="";
+	private String animalAge="";
 	private String animalGender="";
 	private String animalStatus="";
 	private String animalKg="";

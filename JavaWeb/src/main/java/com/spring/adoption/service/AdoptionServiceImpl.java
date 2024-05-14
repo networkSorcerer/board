@@ -31,8 +31,13 @@ public class AdoptionServiceImpl implements AdoptionService{
 
 	@Override
 	public AdoptionVO adoptionDetail(AdoptionVO adoptionvo) {
-		// TODO Auto-generated method stub
-		return null;
+		adoptionDAO.readCntUpdate(adoptionvo);
+		
+		AdoptionVO detail = adoptionDAO.adoptionDetail(adoptionvo);
+		if(detail != null) {
+			detail.setAdoptionContent(detail.getAdoptionContent().replaceAll("\n", "<br/>"));
+		}
+		return detail;
 	}
 
 	@Override

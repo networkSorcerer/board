@@ -37,6 +37,15 @@ public class AdoptionController {
 			
 			return "project/adoption/adoptionList";
 		}
-	}
 	
+	
+	@GetMapping("/adoptionDetail")
+	public String adoptionDetail(@ModelAttribute AdoptionVO adoptionvo, Model model) {
+		log.info("adoptionDetail 호출 성공");
+		AdoptionVO detail = adoptionService.adoptionDetail(adoptionvo);
+		model.addAttribute("detail", detail);
+		
+		return "project/adoption/adoptionDetail";
+	}
 
+}
