@@ -25,8 +25,8 @@ public class AdoptionServiceImpl implements AdoptionService{
 
 	@Override
 	public int adoptionListCnt(AdoptionVO adoptionvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return adoptionDAO.adoptionListCnt(adoptionvo);
 	}
 
 	@Override

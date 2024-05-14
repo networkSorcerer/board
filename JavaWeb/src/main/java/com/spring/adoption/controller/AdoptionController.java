@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.spring.admin.login.vo.AdminLoginVO;
 import com.spring.adoption.service.AdoptionService;
 import com.spring.adoption.vo.AdoptionVO;
+import com.spring.common.vo.PageDTO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,17 +26,17 @@ public class AdoptionController {
 	private AdoptionService adoptionService;
 	
 	@GetMapping("/adoptionList")
-	public String adoptionList(@SessionAttribute(name="adminLogin", required = false) AdminLoginVO adminLoginVO, @ModelAttribute AdoptionVO adoptionvo, Model model  ) {
+	public String adoptionList( @ModelAttribute AdoptionVO adoptionvo, Model model  ) {
 		log.info("adoptionList 호출 성공");
-		if (adminLoginVO == null) {return "/admin/adminLogin";} else {
+		
 			List<AdoptionVO> adoptionList = adoptionService.adoptionList(adoptionvo);
 			model.addAttribute("adoptionList",adoptionList);
 			
-			//int total = adoptionService.adoptionListCnt(adoptionvo);
-			//model.addAttribute("pageMaker", new PageDTO(adoptionvo, total));
+			int total = adoptionService.adoptionListCnt(adoptionvo);
+			model.addAttribute("pageMaker", new PageDTO(adoptionvo, total));
 			
 			return "project/adoption/adoptionList";
 		}
 	}
 	
-}
+

@@ -32,7 +32,7 @@
 	<select id="adoptionList" parameterType="adoption" resultMap="adoptionMap">
 		<![CDATA[
 		SELECT
-			adoption_id,adoption_title, adoption_status, TO_CHAR(adoption_date, 'YYYY-MM--DD') AS adotion_date, adoption_cnt, adoption_level
+			adoption_id,adoption_title, adoption_status, TO_CHAR(adoption_date, 'YYYY-MM-DD') AS adoption_date, adoption_cnt, adoption_level
 		FROm (
 				SELECT /*+INDEX_DESC(adoption pk_adoption)*/
 				ROWNUM AS rnum, adoption_id, adoption_title, adoption_status, adoption_date, adoption_cnt, adoption_level
@@ -61,4 +61,17 @@
 			<![CDATA[adoption_status LIKE '%'||#{keyword} || '%']]>
 		</if>
 	</sql>
+	
+	<select id="adoptionListCnt" parameterType="adoption" resultType="int">
+		SELECT count(*) FROM adoption
+			<trim prefix="where(" suffix=")" >
+				<include refid="adoptionSearch"></include>
+			</trim>
+	</select>
+	
+	<update id="readCntUpdate" parameterType="adoption">
+		UPDATE adoption
+		SET adoption_cnt = adoption_cnt + 1
+		WHERE adoption_id = #{adoptionId}
+	</update>
 </mapper>

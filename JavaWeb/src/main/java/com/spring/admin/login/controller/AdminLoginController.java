@@ -32,6 +32,7 @@ public class AdminLoginController {
 		AdminLoginVO adminLogin = adminLoginService.loginProcess(login);
 		
 		String url ="";
+		
 		if(adminLogin != null) {
 			 model.addAttribute("adminLogin", adminLogin);
 			url = "/project/adminVolunteerList";

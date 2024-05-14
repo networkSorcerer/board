@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/admin.jspf"%>
-
+<main>
 <h1 class="h2">입양 공고</h1>
 	<div class="container">
 		<div class="text-center"><h3>입양 공고 리스트</h3></div>
@@ -16,6 +16,14 @@
 				<div class="">
 					<label for="search">검색 조건</label>
 				</div>
+				<div class="col-auto">
+					<select id="search" name="search" class="">
+						<option value="adoption_id">공공 ID</option>
+						<option value="adoption_title">공고 제목</option>
+                        <option value="adoption_level">공고 레벨</option>
+                        <option value="adoption_status">공고 상태</option>
+					</select>
+				</div>
 				<div>
 					<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" >
 				</div>
@@ -27,8 +35,9 @@
 		</div>
 		
 		<div id="adoptionSearch" class="text-right"></div>
+		
 		<div id="adoptionList">
-			<table summary="게시판 리스트" class="">
+			<table summary="게시판 리스트" class="table">
 				<thead>
 					<tr class="">
 						<th class="">공고 ID</th>
@@ -42,14 +51,14 @@
 				<tbody id="list">
 					<c:choose>
 						<c:when test="${not empty adoptionList }">
-							<c:forEach var="adotion" items="${adoptionList }" varStatus="status">
+							<c:forEach var="adoption" items="${adoptionList }" varStatus="status">
 								<tr class="text-center id" data-num="${adoption.adoptionId }">
 									<td class="id">${adoption.adoptionId }</td>
 									<td class="goDetail text-start">${adoption.adoptionTitle }</td>
 									<td class="adoptionLevel">${adoption.adoptionLevel }</td>
 									<td class="adoptionStatus">${adoption.adoptionStatus }</td>
-									<td class="adotionDate">${adoption.adoptionDate }</td>
-									<td class="adoptionCnt">${adoption.adotionCnt }</td>
+									<td class="adoptionDate">${adoption.adoptionDate }</td>
+									<td class="adoptionCnt">${adoption.adoptionCnt }</td>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
@@ -71,7 +80,7 @@
 				</li>
 			</c:if>
 			<c:forEach var ="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-				<li class="page-iem ${pageMaker.cvo.pageNum == num ? 'active':'' }">
+				<li class="page-item ${pageMaker.cvo.pageNum == num ? 'active':'' }">
 					<a href="${num }" class="page-link" href="#">${num}</a>
 				</li>
 			</c:forEach>
@@ -93,7 +102,7 @@
 			let value="";
 			if(word!="") {
 				$("#keyword").val("<c:out value='${adoptionVO.keyword}'/>");
-				$("#search").val("<c:out value='${adotionVO.search}'/>");
+				$("#search").val("<c:out value='${adoptionVO.search}'/>");
 				
 				if($("#search").val()!='adotion_content'){
 					if($("#search").val()=='adoption_id')value ="#list tr td.id";
@@ -111,5 +120,6 @@
 		});
 	</script>	
 	<script src="/resources/include/js/common.js"></script>	
+</main>
 </body>
 </html>
