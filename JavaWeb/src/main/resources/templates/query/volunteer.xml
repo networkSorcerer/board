@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.volunteer.dao.VolunteerDAO">
+	<resultMap type="volunteer" id="volunteerMap">
+		<id column="volunteer_id" property="volunteerId"/>
+		<result column="volunteer_detail" property="volunteerDetail"/>
+		<result column="volunteer_date" property="volunteerDate"/>
+		<result column="volunteer_title" property="volunteerTitle"/>
+		<result column="volunteer_time" property="volunteerTime"/>
+		<result column="volunteer_due" property="volunteerDue"/>
+		<result column="volunteer_limit" property="volunteerLimit"/>
+		<result column="volunteer_cost" property="volunteerCost"/>
+		<result column="volunteer_location" property="volunteerLocation"/>
+		<result column="admin_id" property="adminId" />
+		<result column="volunteer_file" property="volunteerFile" />	
+	</resultMap>
+	
+	<select id="volunteerList" parameterType="volunteer" resultMap="volunteerMap">
+		SELECT volunteer_id, volunteer_Time, volunteer_title
+		FROM volunteer
+		ORDER BY volunteer_id DESC
+	</select>
+</mapper>
