@@ -39,12 +39,6 @@
 								</td>
 							</tr>
 							<tr>
-								<th>공고 내용</th>
-		          				<td class="text-start">
-		            			<textarea name="adoptionContent" id="adoptionContent"  class="form-control" style="resize: none;">${updateData.adoptionContent }</textarea>
-		          				</td>
-							</tr>
-							<tr>
 		          	<th class="col-md-1">공고 레벨</th>
 		          	<td class="text-start">
 		          		<select name="adoptionLevel" id="adoptionLevel" value="${updateData.adoptionLevel }" class="form-control">
@@ -80,12 +74,13 @@
 						</tbody>
 					</table>
 				</div>
-		<div class="text-end">
-    	<button type="button" id="adoptionUpdateBtn" class="btn btn-success btn-sm">수정</button>
-    	<button type="button" id="adoptionCancelBtn" class="btn btn-success btn-sm">취소</button>
-    	<button type="button" id="adoptionListBtn" class="btn btn-success btn-sm">목록</button>
-    	</div>	
+		
 		</form>
+		<div class="text-end">
+    		<button type="button" id="adoptionUpdateBtn" class="btn btn-success btn-sm">수정</button>
+    		<button type="button" id="adoptionCancelBtn" class="btn btn-success btn-sm">취소</button>
+    		<button type="button" id="adoptionListBtn" class="btn btn-success btn-sm">목록</button>
+    	</div>	
 	</div>
 </main>
 <script src="/resources/include/js/adoption/updateForm.js"></script>

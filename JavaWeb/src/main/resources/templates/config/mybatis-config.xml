@@ -5,5 +5,6 @@
 		<typeAlias type="com.spring.admin.login.vo.AdminLoginVO" alias="adminLogin"/>
 		<typeAlias type="com.spring.adoption.vo.AdoptionVO" alias="adoption"/>
 		<typeAlias type="com.spring.volunteer.vo.VolunteerVO" alias="volunteer"/>
+		<typeAlias type="com.spring.animal.vo.AnimalVO" alias="animal"/>
 	</typeAliases>
 </configuration>

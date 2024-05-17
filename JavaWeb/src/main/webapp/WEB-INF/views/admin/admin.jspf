@@ -23,5 +23,8 @@
 			<li>
 				<a href="/adoption/adoptionList">입양 공고</a>
 			</li>
+			<li>
+				<a href="/animal/animalList">보호 동물</a>
+			</li>
 		</ul>
 	</div>

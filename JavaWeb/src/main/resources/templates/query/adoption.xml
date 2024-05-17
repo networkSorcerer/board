@@ -84,4 +84,40 @@
 		from animal an  join adoption ad  on an.animal_id = ad.animal_id
 		where ad.adoption_id = #{adoptionId}
 	</select> 
+	
+	<select id="pwdConfirm" parameterType="adoption" resultType="int">
+		SELECT NVL((
+			SELECT 1 FROM adoption
+			WHERE adoption_id = #{adoptionId}
+			), 0) as state
+		FROM dual
+	</select>
+	
+	<update id="adoptionUpdate" parameterType="adoption">
+	    UPDATE adoption
+	    SET adoption_title = #{adoptionTitle},
+	        adoption_content = #{adoptionContent},
+	        adoption_level = #{adoptionLevel},
+	        adoption_status = #{adoptionStatus},
+	        adoption_date = sysdate
+	      
+	        <if test="adoptionFile != ''">
+	        	, adoption_file = #{adoptionFile}
+	        </if>
+	    WHERE adoption_id =#{adoptionId}
+	</update>
+
+
+	
+	<delete id ="adoptionDelete" parameterType="adoption">
+		DELETE FROM adoption WHERE adoption_id = #{adoptionId}
+	</delete>
+	
+	<insert id="adoptionInsert" parameterType="adoption">
+		<selectKey keyProperty="adoptionId" resultType="int" order="BEFORE">
+			select adoption_seq.nextval from dual
+		</selectKey>
+		INSERT INTO adoption (adoption_id, adoption_title, adoption_level,adoption_status,adoption_content, adoption_file,animal_id,admin_id)
+		VALUES( #{adoptionId}, #{adoptionTitle}, #{adoptionLevel},#{adoptionStatus},#{adoptionContent},#{adoptionFile},#{animalId},#{adminId})
+	</insert> 
 </mapper>

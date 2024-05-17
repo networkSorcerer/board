@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.adoption.dao.AdoptionDAO;
 import com.spring.adoption.vo.AdoptionVO;
+import com.spring.common.file.FileUploadUtil;
 
 import lombok.Setter;
 
@@ -42,32 +43,51 @@ public class AdoptionServiceImpl implements AdoptionService{
 
 	@Override
 	public int pwdConfirm(AdoptionVO adoptionvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = adoptionDAO.pwdConfirm(adoptionvo);
+		return result;
 	}
 
 	@Override
 	public AdoptionVO updateForm(AdoptionVO adoptionvo) {
-		// TODO Auto-generated method stub
-		return null;
+		AdoptionVO updateData = null;
+		updateData = adoptionDAO.adoptionDetail(adoptionvo);
+		return updateData;
 	}
 
 	@Override
 	public int adoptionInsert(AdoptionVO adoptionvo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		if(adoptionvo.getFile().getSize() > 0 ) {
+			String fileName = FileUploadUtil.fileUpload(adoptionvo.getFile(), "adoption");
+			adoptionvo.setAdoptionFile(fileName);
+		}
+		result = adoptionDAO.adoptionInsert(adoptionvo);
+		return result;
 	}
 
 	@Override
 	public int adoptionUpdate(AdoptionVO adoptionvo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		if(!adoptionvo.getFile().isEmpty()) {
+			if(!adoptionvo.getAdoptionFile().isEmpty()) {
+				FileUploadUtil.fileDelete(adoptionvo.getAdoptionFile());
+			}
+			String fileName = FileUploadUtil.fileUpload(adoptionvo.getFile(),"adoption");
+			adoptionvo.setAdoptionFile(fileName);
+		}
+		result = adoptionDAO.adoptionUpddate(adoptionvo);
+		return result;
 	}
 
 	@Override
 	public int adoptionDelete(AdoptionVO adoptionvo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		if(!adoptionvo.getAdoptionFile().isEmpty()) {
+			FileUploadUtil.fileDelete(adoptionvo.getAdoptionFile());
+		}
+		result = adoptionDAO.adoptionDelete(adoptionvo);
+		return result;
 	}
 
 }

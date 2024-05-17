@@ -20,7 +20,8 @@ public class VolunteerVO {
 	private String volunteerCost;
 	private String volunteerLocation;
 	private int volunteerProgress;
-	
+	private String volunteerTitle;		// 봉사활동 게시물 제목
+
 	//private MultipartFile file;
 	private String volunteerFile;
 

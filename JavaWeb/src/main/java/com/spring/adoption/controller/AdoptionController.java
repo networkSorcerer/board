@@ -50,7 +50,7 @@ public class AdoptionController {
 		return "project/adoption/adoptionDetail";
 	}
 	
-	@PostMapping("/adpotionInsert")
+	@PostMapping("/adoptionInsert")
 	public String adoptionInsert(AdoptionVO adoptionvo) throws Exception{
 		log.info("adoptionInsert 호출 성공");
 		adoptionService.adoptionInsert(adoptionvo);
@@ -68,7 +68,7 @@ public class AdoptionController {
 		log.info("updateForm 호출 성공");
 		log.info("adoptionId = " + adoptionvo.getAdoptionId());
 		AdoptionVO updateData = adoptionService.updateForm(adoptionvo);
-		model.addAttribute("updateData",updateData);
+		model.addAttribute("updateData", updateData);
 		return "project/adoption/updateForm";
 	}
 	

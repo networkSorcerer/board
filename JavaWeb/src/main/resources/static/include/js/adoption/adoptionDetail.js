@@ -12,7 +12,7 @@ $(function(){
 			"method":"get",
 			"action":"/adoption/updateForm"
 		});
-		$("f_data").submit();
+		$("#f_data").submit();
 	});
 	
 	$("#DeleteBtn").on("click", () => {
