@@ -20,13 +20,13 @@ $(function(){
 			"method":"post",
 			"action":"/adoption/adoptionDelete"
 		});
-		$("f_data").submit();
-		$("#pwdChk").css("visibility", "visible");
+		$("#f_data").submit();
+		/*$("#pwdChk").css("visibility", "visible");
 		btnInit();
-		buttonCheck = "deleteButton";
+		buttonCheck = "deleteButton";*/
 	});
 	
-	$("#adoptionPasswd").bind("keydown", function(event){
+	/*$("#adoptionPasswd").bind("keydown", function(event){
 		if(event.keyCode === 13) {
 			event.preventDefault();
 		}
@@ -34,15 +34,15 @@ $(function(){
 	
 	$("#adoptionPasswd").on("keyup", ()=> {
 		btnInit();
-	});
+	});*/
 	
-	$("#passwdCancelBtn").on("click", function(){
+	/*$("#passwdCancelBtn").on("click", function(){
 		$("#adoptionPasswd").val("");
 		$("#pwdChk").css("visibility", "hidden");
 		buttonCheck = "";
-	});
+	});*/
 	
-	$("#passwdBtn").on("click", function(){
+	/*$("#passwdBtn").on("click", function(){
 		$.ajax({
 			url : "/adoption/pwdConfirm",
 			type : "post",
@@ -71,7 +71,8 @@ $(function(){
 				}
 			}
 		});
-	});
+	
+	})*/
 	
 	$("#insertFormBtn").click(function(){
 		location.href = "/adoption/writeForm";

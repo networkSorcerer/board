@@ -23,11 +23,11 @@
 						<tbody>
 							<tr>
 								<td colspan="4">
-								<table class=""></table>
+								
 							<tr>
 								<td class="col-3">공고 제목</td>
 								<td class="text-start">
-								<input tpye="text" value="${updateData.adoptionTitle }" class="form-control" id="adoptionTitle"
+								<input type="text" value="${updateData.adoptionTitle }" class="form-control" id="adoptionTitle"
 								name="adoptionTitle" placeholder="제목을 입력하세요"
 								data-type="CDATA">
 								</td>

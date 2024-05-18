@@ -71,7 +71,7 @@
                     <input type="password" class="form-control" id="adoptionPasswd"
                         name="adoptionPasswd" placeholder="비밀번호를 입력하세요." maxlength="16">
                 </div>
-            </div> -->
+            </div>  -->
              <div class="mb-3 row">
                 <label for="file" class="col-sm-2 col-form-label">첨부파일</label>
                 <div class="col-sm-10">
