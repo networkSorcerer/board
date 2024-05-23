@@ -34,4 +34,20 @@ public class AnimalController {
 		
 		return "project/animal/animalList";
 	}
+	
+	@GetMapping("/animalDetail")
+	public String animalDetail( @ModelAttribute AnimalVO avo, Model model) {
+		AnimalVO detail = animalService.animalDetail(avo);
+		model.addAttribute("detail",detail);
+		
+		return "project/animal/animalDetail";
+		
+	}
+	
+	
+	@GetMapping("/animalInsert")
+	public String animalInsert(AnimalVO avo) throws Exception{
+		animalService.animalInsert(avo);
+		return "redirect:/animal/animalList";
+	}
 }
