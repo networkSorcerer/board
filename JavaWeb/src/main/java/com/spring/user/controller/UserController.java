@@ -184,6 +184,30 @@ public class UserController {
 			return "user/myPage";
 		}
 	}
+	
+	@GetMapping("/updateProfile")
+	public String updateProfile(@SessionAttribute(name = "userLogin", required = false) UserVO userLogin, Model model) {
+		log.info("updateProfile 호출");
+		if(userLogin == null) {
+			return "user/login";
+		} else {
+			UserVO userInfo = userService.userInfo(userLogin.getUserId());
+			if(userInfo == null) {
+				return "redirect:/user/mypage";
+			} else {
+				model.addAttribute("userInfo", userInfo);
+				return "user/updateProfile";
+			}
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/pwdConfirm", produces = "application/json; charset=UTF-8")
+	public int pwdConfirm(@RequestBody UserVO uvo) {
+		int result = 0;
+		result = userService.pwdConfirm(uvo);
+		return result;
+	}
 		
 }
 
