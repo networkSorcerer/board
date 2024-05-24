@@ -73,24 +73,25 @@
 	</div>
 	
 	<nav aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">
-			<c:if test="${pageMaker.prev }">
-				<li class="page-item disabled">
-					<a class="page-link">Previous</a>
-				</li>
-			</c:if>
-			<c:forEach var ="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-				<li class="page-item ${pageMaker.cvo.pageNum == num ? 'active':'' }">
-					<a href="${num }" class="page-link" href="#">${num}</a>
-				</li>
-			</c:forEach>
-			<c:if test="${pageMaker.next }">
-				<li class="page-item">
-					<a href="${pageMaker.endPage + 1 }" class="page-link" href="#">Next</a>
-				</li>
-			</c:if>
-		</ul>
-	</nav>
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                </c:if>
+                <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                    <li class="page-item ${pageMaker.cvo.pageNum == num ? 'active':''}">
+                        <a href="${num}" class="page-link" href="#">${num}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item">
+                        <a href="${pageMaker.endPage + 1}" class="page-link" href="#">Next</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+
 	<div class="text-end">
 		<button type="button" id="insertFormBtn" class="">새로 등록하기</button>
 	</div>
@@ -98,27 +99,29 @@
 	<script src="/resources/include/js/adoption/adoptionList.js"></script>
 	<script>
 		$(function(){
-			let word="<c:out value='${adotionVO.keyword}'/>";
+			/* 검색 후 검색 대상과 검색 단어 출력 */
+			let word="<c:out value='${animalVO.keyword}' />";
 			let value="";
-			if(word!="") {
-				$("#keyword").val("<c:out value='${adoptionVO.keyword}'/>");
-				$("#search").val("<c:out value='${adoptionVO.search}'/>");
-				
-				if($("#search").val()!='adotion_content'){
-					if($("#search").val()=='adoption_id')value ="#list tr td.id";
-					else if ($("#search").val()=='adoption_title') value="#list tr td.goDetail";
-					else if ($("#search").val()=='adoption_level') value="#list tr td.aodptionLevel";
-					else if ($("#search").val()=='adoption_title') value="#list tr td.adoptionStatus";
+			if(word!=""){
+				$("#keyword").val("<c:out value='${animalVO.keyword}' />");
+				$("#search").val("<c:out value='${animalVO.search}' />");
+			
+				if($("#search").val()!='animal_status'){
+					//:contains()는 특정 텍스트를 포함한 요소반환 	
+					if($("#search").val()=='animal_name') value = "#list tr td.goDetail";
+					else if($("#search").val()=='animal_id') value="#list tr td.id";
+					else if($("#search").val()=='animal_species')value="#list tr td.species"
+					else if($("#search").val()=='animal_temp')value="#list tr td.temp"
 					console.log($(value+":contains('"+word+"')").html());
-					$(value+":contains('"+word+"')").each(function(){
-						let regex = new RegExp(word, 'gi');
+					//$("#list tr td.goDetail:contains('노력')").html()  => <span class='required'>노력</span>에 대한 명언
+			    	$(value+":contains('"+word+"')").each(function () {
+						let regex = new RegExp(word,'gi');
 						$(this).html($(this).html().replace(regex,"<span class='required'>"+word+"</span>"));
-					});
-					
+			    	});
 				}
 			}
-		});
-	</script>	
+		});	
+	</script>
 	<script src="/resources/include/js/common.js"></script>	
 </main>
 </body>

@@ -20,4 +20,60 @@
 		FROM volunteer
 		ORDER BY volunteer_id DESC
 	</select>
+	
+	<select id="volunteerDetail" parameterType="volunteer" resultMap="volunteerMap">
+		SELECT volunteer_id, volunteer_detail, volunteer_date, volunteer_title,
+		volunteer_time,
+		volunteer_due,
+		volunteer_limit, volunteer_cost, volunteer_location, volunteer_file
+		FROM volunteer
+		WHERE volunteer_id = #{volunteerId}
+	</select>
+	
+	<insert id="volunteerInsert" parameterType="volunteer">
+		INSERT INTO volunteer
+		VALUES(volunteer_seq.nextval, #{volunteerDetail}, sysdate, #{volunteerTitle}, #{volunteerTime},
+			#{volunteerDue},#{volunteerLimit},
+			<choose>
+				<when test="volunteerCost != null and volunteerCost != ''">
+					#{volunteerCost}
+				</when>
+				<otherwise>
+					default
+				</otherwise>
+			</choose>)
+			, #{volunteerLocation}, 'admin', #{volunteerFile})
+	</insert>
+	
+	<update id="volunteerUpdate" parameterType="volunteer">
+		UPDATE volunteer
+		SET volunteer_title = #{volunteerTitle}, volunteer_time = #{volunteerTime}, volunteer_due = #{volunteerDue},
+			volunteer_limit = #{volunteerLimit},
+			<if test="volunteerCost != ''">
+				volunteer_cost = #{volunteerCost},
+			</if>
+			<if test="volunteerCost == ''">
+				volunteer_cost = default,
+			</if>
+			volunteer_location = #{volunteerLocation}, volunteer_detail = #{volunteerDetail}
+			<if test="volunteerFile != ''">
+			, volunteer_file = #{volunteerFile}
+			</if>
+		WHERE volunteer_id = #{volunteerId}
+	</update>
+	
+	<delete id="volunteerDelete" parameterType="volunteer">
+		DELETE FROM volunteer
+		WHERE volunteer_id = #{volunteerId}
+	</delete>
+	
+	<select id="mainVol" parameterType="volunteer" resultMap="volunteerMap">
+		select volunteer_id, volunteer_title, volunteer_time, volunteer_limit, volunteer_cost, volunteer_location, volunteer_file
+		from (
+			select volunteer_id, volunteer_title, volunteer_time, volunteer_limit, volunteer_cost, volunteer_location, volunteer_file
+			from volunteer
+			order by volunteer_id desc
+		)
+		where rownum &lt;=2
+	</select>
 </mapper>

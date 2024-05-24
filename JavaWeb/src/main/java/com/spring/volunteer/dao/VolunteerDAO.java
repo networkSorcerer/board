@@ -16,5 +16,7 @@ public interface VolunteerDAO {
 	
 	public int volunteerUpdate(VolunteerVO volunteerVO);
 	
+	public int volunteerDelete(VolunteerVO volunteerVO);
+	
 	public List<VolunteerVO> mainVol(VolunteerVO volunteerVO);
 }

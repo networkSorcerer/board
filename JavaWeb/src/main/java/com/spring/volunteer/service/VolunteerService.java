@@ -12,6 +12,8 @@ public interface VolunteerService {
 	
 	public int volunteerInsert(VolunteerVO volunteerVO) throws Exception;
 	
+	public VolunteerVO volunteerUpdateForm(VolunteerVO volunteerVO);
+	
 	public int volunteerUpdate(VolunteerVO volunteerVO) throws Exception;
 	
 	public int volunteerDelete(VolunteerVO volunteerVO) throws Exception;
