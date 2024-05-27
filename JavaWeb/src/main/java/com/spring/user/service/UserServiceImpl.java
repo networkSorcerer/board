@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public UserVO findId(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return null;
+		UserVO result = userDao.findId(uvo);
+		return result;
 	}
 	@Override
 	public int findUserByIdAndEmail(UserVO uvo) {
