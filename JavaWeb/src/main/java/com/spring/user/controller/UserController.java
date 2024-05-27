@@ -1,9 +1,12 @@
 package com.spring.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.admin.login.vo.AdminLoginVO;
+import com.spring.common.vo.PageDTO;
 import com.spring.user.service.UserService;
 import com.spring.user.vo.UserVO;
 
@@ -207,6 +212,64 @@ public class UserController {
 		int result = 0;
 		result = userService.pwdConfirm(uvo);
 		return result;
+	}
+	
+	@PostMapping("/updateProfile")
+	public String updateProfile(UserVO uvo, Model model, RedirectAttributes ras) {
+		log.info("회원정보 수정");
+		int result = 0;
+		log.info(uvo.toString());
+		result = userService.updateProfile(uvo);
+		
+		if(result == 1) {
+			UserVO userInfo = userService.userInfo(uvo.getUserId());
+			log.info("업데이트 성공");
+			model.addAttribute("userInfo", userInfo);
+			return "/user/myPage";
+		} else {
+			ras.addFlashAttribute("errorMsg", "업데이트에 문제가 있어 다시 진행해 주세요 ");
+			return "redirect:/user/updateProfile";
+		}
+	}
+	
+	@PostMapping("/userWithdrawal")
+	public String userWithdrawal(UserVO uvo, RedirectAttributes ras) {
+		log.info("회원탈퇴 처리");
+		int result = 0;
+		String url = "";
+		
+		result = userService.userDelete(uvo);
+		
+		if(result ==1) {
+			url="/user/logout";
+		} else {
+			ras.addFlashAttribute("errorMsg", "탈퇴처리에 문제가 있어 다시 진행해주세요 ");
+			url="/user/mypage";
+		}
+		return "redirect:" + url;
+	}
+	
+	@GetMapping("/userList")
+	public String userList(@SessionAttribute(name ="adminLogin", required  = false) AdminLoginVO adminLoginVO, @ModelAttribute UserVO uvo, Model model) {
+		log.info("userList 호출 ");
+		if(adminLoginVO == null) {
+			return "/admin/adminLogin";
+		} else {
+			List<UserVO> userList = userService.userList(uvo);
+			model.addAttribute("userList", userList);
+			
+			int total = userService.userListCnt(uvo);
+			
+			model.addAttribute("pageMaker", new PageDTO(uvo, total));
+			
+			return "admin/user/userList";
+			
+		}
+	}
+	
+	@GetMapping("joinTerms")
+	public String joinTerms() {
+		return "/user/join-terns";
 	}
 		
 }
