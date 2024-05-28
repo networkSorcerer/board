@@ -75,38 +75,52 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public UserVO userInfo(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		UserVO uvo = new UserVO();
+		uvo.setUserId(userId);
+		UserVO info = userDao.userInfo(uvo);
+		return info;
 	}
 	@Override
 	public int pwdConfirm(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = userDao.pwdConfirm(uvo);
+		return result;
 	}
 	@Override
 	public int updateProfile(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.updateProfile(uvo);
+		return result;
 	}
 	@Override
 	public int userWithdrawal(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.userWithdrawal(uvo);
+		return result;
 	}
 	@Override
 	public int userDelete(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.userDelete(uvo);
+		return result;
 	}
 	@Override
 	public List<UserVO> userList(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserVO> list = null;
+		list = userDao.userList(uvo);
+		
+		if(list != null && !list.isEmpty()) {
+			for(UserVO user : list) {
+				maskUserData(user);
+			}
+		}
+		return list;
+		
+	}
+	private void maskUserData(UserVO user) {
+		String maskedId = transfermasking
+		
 	}
 	@Override
 	public int userListCnt(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.userListCnt(uvo);
 	}
 
 }
