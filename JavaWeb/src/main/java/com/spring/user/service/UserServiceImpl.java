@@ -33,38 +33,45 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public int findUserByIdAndEmail(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.findUserByIdAndEmail(uvo);
+		return result;
 	}
 	@Override
 	public int resetPasswd(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.resetPasswd(uvo);
+		return result;
 	}
 	@Override
 	public String generateTempPasswd() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder tempPassword = new StringBuilder(PASSWORD_LENGTH);
+		for(int i =0; i < PASSWORD_LENGTH; i++) {
+			char randomChar = CHAR_SET[random.nextInt(CHAR_SET.length)];
+			tempPassword.append(randomChar);
+		}
+		return tempPassword.toString();
 	}
 	@Override
 	public int userJoin(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDao.userJoin(uvo);
+		return result;
 	}
 	@Override
 	public int idCheck(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = userDao.idCheck(uvo);
+		return result;
 	}
 	@Override
 	public int phoneCheck(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = userDao.phoneCheck(uvo);
+		return result;
 	}
 	@Override
 	public int emailCheck(UserVO uvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = userDao.emailCheck(uvo);
+		return result;
 	}
 	@Override
 	public UserVO userInfo(String userId) {
