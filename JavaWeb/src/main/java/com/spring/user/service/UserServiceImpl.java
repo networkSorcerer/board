@@ -114,13 +114,82 @@ public class UserServiceImpl implements UserService{
 		return list;
 		
 	}
-	private void maskUserData(UserVO user) {
-		String maskedId = transfermasking
-		
-	}
+	
 	@Override
 	public int userListCnt(UserVO uvo) {
 		return userDao.userListCnt(uvo);
+	}
+	
+	private void maskUserData(UserVO user) {
+		String maskedId = transferMasking(user.getUserId(), 2, user.getUserId().length() -10);
+		String maskedName = transferNameMasking(user.getUserName());
+		String maskedEmail = transferEmailMasking(user.getUserEmail());
+		String maskedPhone = transferPhoneMasking(user.getUserPhone());
+		
+		user.setUserId(maskedId);
+		user.setUserName(maskedName);
+		user.setUserEmail(maskedEmail);
+		user.setUserPhone(maskedPhone);
+		
+	}
+	
+	private String transferMasking(String target, int startIndex, int endIndex) {
+		if(target == null) {
+			return "";
+		} else {
+			String result ="";
+			target = target.trim();
+			int length = target.length();
+			String[] alphabets = target.split("");
+			for(int i = 0; i < length; i++) {
+				result += (i < startIndex || i >= (length - endIndex)) ? alphabets[i] : "*";
+			}
+			return result;
+		}
+	}
+	
+	private String transferNameMasking(String name) {
+		if(name == null) {
+			return "";
+		} else {
+			if(name.length() >2) {
+				return transferMasking(name, 1, 1);
+			} else {
+				return transferMasking(name, 1, 0);
+			}
+		}
+	}
+	
+	private String transferEmailMasking(String email) {
+		if(email == null) {
+			return "";
+		} else {
+			if(email.contains("@")) {
+				String [] data = email.split("@");
+				int endIndex = data[1].length() - data[1].indexOf(".");
+				return transferMasking(data[0], 1, 0) + "@" + transferMasking(data[1], 1, endIndex);
+			} else {
+				return email;
+			}
+		}
+	}
+	
+	private String transferPhoneMasking(String phone) {
+		if(phone == null) {
+			return "";
+		} else {
+			if(phone.contains("-")) {
+				String [] data = phone.split("-");
+				StringBuilder sb = new StringBuilder();
+				for(int i = 0; i < data.length; i++) {
+					sb.append(i > 0 ? "-" : "");
+					sb.append(i == 1 ? transferMasking(data[i], 0, 0) : data[i]);
+				} 
+				return sb.toString();
+			} else {
+				return transferMasking(phone, 3, phone.length()-7);
+			}
+		}
 	}
 
 }
