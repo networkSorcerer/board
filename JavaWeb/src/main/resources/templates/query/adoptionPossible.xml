@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.adoption.possible.dao.AdoptionPossibleDAO">
+	<resultMap type="adoptionPossible" id="adoptionPossibleMap">	
+		
+		<result column="animal_id" property="animalId"/>
+		<result column="animal_species" property="animalSpecies"/>
+		<result column="animal_age" property="animalAge"/>
+		<result column="animal_gender" property="animalGender"/>
+		<result column="animal_status" property="animalStatus"/>
+		<result column="animal_kg" property="animalKg"/>
+		<result column="animal_color" property="animalColor"/>
+		<result column="animal_memo" property="animalMemo"/>
+		<result column="animal_temp" property="animalTemp"/>
+		<result column="animal_regist" property="animalRegist"/>
+		<result column="animal_name" property="animalName"/>
+		<result column="animal_passwd" property="animalPasswd"/>
+		<result column="readcnt" property="readcnt"/>
+		<result column="animal_file" property="animalFile"/>			
+		
+		<result column="center_id" property="centerId"/>
+		<result column="center_name" property="centerName"/>
+		<result column="center_address" property="centerAddress"/>
+		<result column="center_operating" property="centerOperating"/>
+		<result column="center_tell" property="centerTell"/>
+		<result column="center_lat" property="centerLat"/>
+		<result column="center_lot" property="centerLot"/>
+		
+		<result column="admin_id" property="adminId"/>
+		<result column="admin_pwd" property="adminPwd"/>
+		
+		<result column="adoption_id" property="adoptionId"/>
+		<result column="adoption_content" property="adoptionContent"/>
+		<result column="adoption_date" property="adoptionDate"/>
+		<result column="adoption_title" property="adoptionTitle"/>
+		<result column="adoption_cnt" property="adoptionCnt"/>
+		<result column="adoption_status" property="adoptionStatus"/>
+		<result column="adoption_level" property="adoptionLevel"/>
+		<result column="adoption_file" property="adoptionFile"/>
+		<result column="adoption_passwd" property="adoptionPasswd"/>
+		
+	</resultMap>
+	
+	
+	
+	<select id="apList" parameterType="adoptionPossible" resultMap="adoptionPossibleMap">
+		SELECT 
+    a.animal_id,
+    a.animal_species,
+    a.animal_name,
+    a.animal_gender,
+    a.animal_status,
+    a.animal_kg,
+    a.animal_color,
+    a.animal_temp,
+    NVL(r.readcnt, 0) AS readcnt,
+    TO_CHAR(a.animal_regist, 'YYYY-MM-DD') AS animal_regist,
+    a.animal_file
+FROM 
+    animal a
+LEFT JOIN 
+    (
+        SELECT 
+            animal_id,
+            COUNT(*) AS readcnt
+        FROM 
+            adoption
+        WHERE 
+            adoption_id IS NOT NULL
+        GROUP BY 
+            animal_id
+    ) r ON a.animal_id = r.animal_id
+WHERE 
+    a.animal_id IN (SELECT animal_id FROM adoption WHERE adoption_id IS NOT NULL)
+	</select>
+	
+	
+	
+	<update id="readCntUpdate" parameterType="adoptionPossible">
+		UPDATE adoption
+		SET adoption_cnt = adoption_cnt + 1
+		WHERE adoption_id = #{adoptionId}
+	</update>
+	
+	<select id="apListCnt" parameterType="adoptionPossible" resultType="int">
+    	SELECT count(*) FROM adoption
+    		
+	</select>
+	
+	<select id="apDetail" parameterType="adoptionPossible" resultMap="adoptionPossibleMap">
+		select an.animal_id, an.animal_name, an.animal_species, an.animal_gender, 
+		an.animal_kg, an.animal_age,ad.adoption_content,an.animal_regist,
+		an.animal_age,an.animal_color,an.animal_status,an.animal_memo,an.animal_temp, 
+		ad.adoption_id, ad.adoption_title,ad.adoption_level,ad.adoption_status,ad.adoption_date,
+		ad.adoption_cnt,ad.adoption_file,ad.adoption_thumb,an.animal_file, an.readcnt
+		from animal an  join adoption ad  on an.animal_id = ad.animal_id
+		where ad.animal_id = #{animalId}
+	</select> 
+	
+</mapper>

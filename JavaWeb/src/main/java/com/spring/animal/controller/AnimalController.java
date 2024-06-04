@@ -47,7 +47,7 @@ public class AnimalController {
 	}
 	
 	
-	@GetMapping("/animalInsert")
+	@PostMapping("/animalInsert")
 	public String animalInsert(AnimalVO avo) throws Exception{
 		animalService.animalInsert(avo);
 		return "redirect:/animal/animalList";

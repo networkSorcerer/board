@@ -6,5 +6,6 @@
 		<typeAlias type="com.spring.adoption.vo.AdoptionVO" alias="adoption"/>
 		<typeAlias type="com.spring.volunteer.vo.VolunteerVO" alias="volunteer"/>
 		<typeAlias type="com.spring.animal.vo.AnimalVO" alias="animal"/>
+		<typeAlias type="com.spring.adoption.possible.vo.AdoptionPossibleVO" alias="adoptionPossible"/>
 	</typeAliases>
 </configuration>

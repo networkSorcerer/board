@@ -89,7 +89,7 @@
 		<div class="text-end">
 			<button type="button" id="insertFormBtn" class="btn btn-success btn-sm">새로 등록 하기</button>
 		</div>	
-	</div>
+	
 	
     <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -111,7 +111,7 @@
             </ul>
         </nav>
 
-	</div>
+	
 	
 	<script src="/resources/include/js/animal/animalList.js"></script>
 	<script>
